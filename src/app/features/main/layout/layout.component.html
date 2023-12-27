@@ -1,0 +1,19 @@
+<nb-layout>
+  <nb-layout-header>Awesome Company</nb-layout-header>
+
+  <nb-sidebar>
+    <app-main-sidebar></app-main-sidebar>
+  </nb-sidebar>
+
+  <nb-layout-column [nbSpinner]="!!(layoutService.isLoading$ | async)">
+    <nb-card>
+      <nb-card-header>{{ layoutService.pageTitle$ | async }} </nb-card-header>
+      <nb-card-body>
+        <router-outlet />
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+  <nb-layout-footer>
+    <div>Copyright 2023@</div>
+  </nb-layout-footer>
+</nb-layout>

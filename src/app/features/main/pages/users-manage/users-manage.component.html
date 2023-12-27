@@ -1,0 +1,48 @@
+<div *ngIf="dataSource">
+  <label class="search-label" for="search">Search:</label>
+  <input nbInput [nbFilterInput]="dataSource" class="ml-4" />
+
+  <table
+    class="mt-4 table-auto"
+    [nbTreeGrid]="dataSource"
+    [nbSort]="dataSource"
+    [equalColumnsWidth]="false"
+    (sort)="updateSort($event)">
+    <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+    <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+    <ng-container [nbTreeGridColumnDef]="'actions'">
+      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Actions</th>
+
+      <td nbTreeGridCell *nbTreeGridCellDef="let row">
+        <!-- Here you can place any element you want, you still can access data using row.data and corresponding column name, for example a button -->
+        <a [routerLink]="['/users/edit', row.data.id]" nbButton>
+          <nb-icon icon="edit"></nb-icon>
+        </a>
+
+        <button
+          [disabled]="isSubmitting"
+          (click)="deleteUser(row.data.id)"
+          status="danger"
+          nbButton
+          class="ml-2">
+          <nb-icon icon="trash-2-outline"></nb-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container
+      *ngFor="let column of defaultColumns; let index = index"
+      [nbTreeGridColumnDef]="column">
+      <th
+        nbTreeGridHeaderCell
+        [nbSortHeader]="getSortDirection(column)"
+        *nbTreeGridHeaderCellDef>
+        {{ transformColumnNames(column) }}
+      </th>
+      <td nbTreeGridCell *nbTreeGridCellDef="let row">
+        {{ row.data[column] || '-' }}
+      </td>
+    </ng-container>
+  </table>
+</div>

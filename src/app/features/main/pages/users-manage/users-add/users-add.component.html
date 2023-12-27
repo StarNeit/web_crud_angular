@@ -1,0 +1,45 @@
+<form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+  <div class="mb-4">
+    <label for="firstName">First Name:</label>
+    <input
+      nbInput
+      class="mt-2 block"
+      type="text"
+      formControlName="firstName"
+      id="firstName" />
+  </div>
+
+  <div class="mb-4">
+    <label for="lastName">Last Name:</label>
+    <input
+      nbInput
+      class="mt-2 block"
+      type="text"
+      formControlName="lastName"
+      id="lastName" />
+  </div>
+
+  <div class="mb-4">
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      nbInput
+      class="mt-2 block"
+      type="email"
+      formControlName="email"
+      id="email" />
+  </div>
+
+  <button
+    [nbSpinner]="isLoading"
+    [disabled]="isLoading"
+    nbButton
+    status="primary"
+    type="submit">
+    <ng-container *ngIf="isLoading; else submitBtnTxt">
+      Loading...
+    </ng-container>
+
+    <ng-template #submitBtnTxt> {{ user ? 'Edit' : 'Add' }} User </ng-template>
+  </button>
+</form>
